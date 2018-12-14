@@ -1,0 +1,146 @@
+apply plugin: 'com.android.application'
+apply plugin: 'org.greenrobot.greendao'
+apply plugin: 'com.antfortune.freeline'
+
+android {
+    compileSdkVersion rootProject.ext.compileSdk
+
+  defaultConfig {
+        applicationId "com.dl7.shownew"
+        minSdkVersion rootProject.ext.minSdk
+        targetSdkVersion rootProject.ext.targetSdk
+        versionCode 105
+        versionName "1.0.5"
+        javaCompileOptions { annotationProcessorOptions { includeCompileClasspath = true } }
+    }
+
+    signingConfigs {
+        release {
+
+                storeFile file("./mvpapp.jks")
+                storePassword "abc123"
+                keyAlias "mvpapp"
+                keyPassword "abc123"
+
+        }
+    }
+    //recommend
+    dexOptions {
+        jumboMode = true
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.release
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+
+//        greendao{
+//            schemaVersion 4
+////            targetGenDir 'src/main/java'
+//        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+
+  //为了解决部分第三方库重复打包了META-INF的问题
+  packagingOptions {
+    exclude 'META-INF/rxjava.properties'
+  }
+  buildToolsVersion '27.0.3'
+}
+
+greendao {
+  schemaVersion 4
+  daoPackage 'com.dl7.mvp.greendao.gen'
+  targetGenDir 'src/main/java'
+}
+
+dependencies {
+  implementation fileTree(include: ['*.jar'], dir: 'libs')
+  testImplementation 'junit:junit:4.12'
+  implementation "com.android.support:appcompat-v7:${rootProject.ext.support}"
+  implementation "com.android.support:recyclerview-v7:${rootProject.ext.support}"
+  implementation "com.android.support:cardview-v7:${rootProject.ext.support}"
+  implementation "com.android.support:support-v4:${rootProject.ext.support}"
+  implementation "com.android.support:design:${rootProject.ext.support}"
+    // leakcanary
+  debugImplementation 'com.squareup.leakcanary:leakcanary-android:1.5.4'
+  releaseImplementation 'com.squareup.leakcanary:leakcanary-android-no-op:1.5.4'
+    // butterknife
+  annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
+  implementation 'com.jakewharton:butterknife:8.8.1'
+    // rxjava
+  implementation 'io.reactivex.rxjava2:rxjava:2.1.3'
+  implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  implementation 'com.jakewharton.rxbinding2:rxbinding:2.1.1'
+  implementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+  implementation 'com.trello:rxlifecycle:1.0'
+  implementation 'com.trello:rxlifecycle-components:1.0'
+  implementation 'com.tbruyelle.rxpermissions2:rxpermissions:0.9.5@aar'
+    // dagger
+    implementation 'com.google.dagger:dagger-android:2.11'
+    implementation 'com.google.dagger:dagger-android-support:2.11' // if you use the support libraries
+    annotationProcessor 'com.google.dagger:dagger-android-processor:2.11'
+    annotationProcessor 'com.google.dagger:dagger-compiler:2.11'//指定注解处理器
+    // retrofit
+  implementation 'com.squareup.retrofit2:retrofit:2.1.0'
+  implementation 'com.squareup.retrofit2:converter-gson:2.1.0'
+  implementation 'com.squareup.retrofit2:adapter-rxjava:2.1.0'
+    // logger
+  implementation 'com.orhanobut:logger:2.2.0'
+    // greendao
+  implementation 'org.greenrobot:greendao:3.1.0'
+    // circleimageview
+  implementation 'de.hdodenhof:circleimageview:2.1.0'
+    // slider 轮播图
+  implementation 'com.daimajia.slider:library:1.1.5'
+    // picasso, slider 库需要用到下面两个库,这样有点多余，可以选择别的库
+  implementation 'com.squareup.picasso:picasso:2.5.2'
+  implementation 'com.nineoldandroids:library:2.4.0'
+    // recyclerview-animators
+  implementation 'jp.wasabeef:recyclerview-animators:2.3.0'
+    // html text
+  implementation 'com.zzhoujay.richtext:richtext:2.1.0'
+//  compile 'com.zzhoujay.richtext:richtext:latest-version'
+    // LabelView
+  compile 'com.flyco.labelview:FlycoLabelView_Lib:1.0.0'
+    // photoview
+  implementation 'com.github.chrisbanes.photoview:library:1.2.4'
+    // dragsloplayout
+//  implementation 'com.github.Rukey7:DragSlopLayout:1.0.3'
+  compile 'com.github.Rukey7:DragSlopLayout:1.0.4'
+    // TagLayout
+  implementation 'com.github.Rukey7:TagLayout:1.0.5'
+    // file picker
+  implementation 'com.github.angads25:filepicker:1.0.6'
+    // IjkPlayerView
+//    compile 'com.github.Rukey7:IjkPlayerView:1.0.4'
+    // shine button
+  implementation 'com.sackcentury:shinebutton:0.2.0'
+    // tab layout
+  implementation 'com.flyco.tablayout:FlycoTabLayout_Lib:2.0.6@aar'
+    // progressbar
+  implementation 'com.daimajia.numberprogressbar:library:1.2@aar'
+    // Dialog
+  compile 'com.flyco.dialog:FlycoDialog_Lib:1.2.8@aar'
+  compile 'com.nineoldandroids:library:2.4.0'
+    // change skin
+    //    compile 'com.zhy:changeskin:4.0.2'
+    //可选，用于生成application类
+  implementation 'com.squareup.okhttp3:logging-interceptor:3.4.1'
+
+    implementation  project(':RecyclerViewHelper')
+    implementation  project(':downloaderLib')
+    implementation  project(':playerview')
+}
+
+apply from: 'tinker_build.gradle'

@@ -1,9 +1,18 @@
-*.iml
-.gradle
+# IDEA/Android Studio project files, because
+# the project can be imported from settings.gradle
 /local.properties
-/.idea/workspace.xml
-/.idea/libraries
+/.idea
 .DS_Store
 /build
+/app/build
+*.iml
 /captures
-/.idea/
+
+# Gradle
+.gradle
+
+# Windows thumbnail db
+
+# generated files
+*.apk
+/keystore.properties

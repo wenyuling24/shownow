@@ -62,6 +62,7 @@ greendao {
   schemaVersion 4
   daoPackage 'com.dl7.mvp.greendao.gen'
   targetGenDir 'src/main/java'
+
 }
 
 dependencies {
